@@ -4,7 +4,7 @@ Created on Fri Dec 21 14:48:02 2018
 
 @author: hared
 """
-## Run after the SWT_SignalProcessing_V5_spiltyears - the "output" variable is required
+## Run after the STEP2 - the "output" variable is required
 ##Note: This set will drop data <2010 due to do air temperature records only having >2010 records
 
 import datetime as dt # converting datetime conventions
