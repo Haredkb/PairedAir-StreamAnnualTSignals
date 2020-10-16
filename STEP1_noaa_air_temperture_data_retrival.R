@@ -10,7 +10,7 @@ library(dplyr)
 library(rgdal) # convert from UTM to lat long if necessary
 library(sf)# convert geomtry datums
 library(tidyverse) # for extract geomtry to two columns
-library(dataRetrieval)
+library(dataRetrieval) #for USGS files
 
 
 #Set input parameters
@@ -24,7 +24,9 @@ air_out <- "./input/AirT/NOAA_pullR"
 #create folder for surface water temperature
 try(dir.create("./input/SWT/"))
 sw_out <- "./input/SWT/"
-
+#set working directory
+setwd('..') #moves back one subfolder to get out of 'scripts' folder and into main folder
+getwd()
 # Read full SW location dataset
 # Location data has to use column names Latitude and Longitude, or Northing and Easting if UTM
 
@@ -46,6 +48,7 @@ if(!("id" %in% colnames(lat_lon_SW_df)))
 
 #Pull data from NWIS, using the start date provided in the Annual Signals Output
 #Prompts user for starting and end times of interest - need as a function because cant seem to get prompt to work during script run (not line by line)
+print("For User Prompted dates (not 2010-01-01 to 2020-01-01) remove commentedout lines 50-53 in R file")
 datefun <- function(){
   Start_Date <- readline(prompt="Enter Start Date (YYYY-MM-DD): ")
   End_Date <- readline(prompt="Enter End Date (YYYY-MM-DD): ")
