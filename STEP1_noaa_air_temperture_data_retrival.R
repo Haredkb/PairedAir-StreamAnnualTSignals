@@ -101,6 +101,7 @@ for (n in 1:nrow(lat_lon_SW_df)){
 
 
 #Get a list of all the NOAA stations currently available
+
 #G_st <- ghcnd_stations() #Use first time, or if need of an update - takes a long time. 
 load(".\\input\\NOAA_Stations_All_20190509.RData")
 

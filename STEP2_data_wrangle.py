@@ -21,7 +21,7 @@ import pickle # to output variable to file
 import time # to use sleep function
 from func_timeout import func_timeout, FunctionTimedOut
 
-##working directory 
+##working directory
 wdir = os.path.dirname(os.getcwd())
 os.chdir(wdir)
 print os.getcwd()
@@ -29,21 +29,18 @@ print os.getcwd()
 # Set up File name and paths
 # Location of input air files
 wksp_in_air = os.path.join(wdir, r'input\AirT\NOAA_pullR')
-wksp_in_air = r'C:\Users\hared\Dropbox\UConn\Projects\300_Network_GW_Temp\900_FinalProjectFiles\Stream-Temperature-Annual-Signals\input\Air_T_data'
-
 # Location of input SW files
 wksp_in = os.path.join(wdir, r'input\SWT')
-wksp_in = r'C:\Users\hared\Dropbox\UConn\Projects\300_Network_GW_Temp\900_FinalProjectFiles\Stream-Temperature-Annual-Signals\input\SW_T_data'
 
 # Location of output files
 try: 
-    os.mkdir(r'final_run_output\STEP2_Output')
+    os.mkdir(r'output\STEP2_Output')
 except: 
     print('folder already exists')
-wksp_out = r'final_run_output\STEP2_Output'
+wksp_out = r'output\STEP2_Output'
 
 # Filepath of the SW location data with NOAA match
-loc_fn = r'final_run_output\Station_ID_NOAA_Match_.txt'
+loc_fn = r'output\Station_ID_NOAA_Match_.txt'
 
 # Basename extensions
 csv_bn = "*.csv" #wildcard
@@ -67,62 +64,62 @@ loc_df = loc_df.reset_index()
 
 #Output locations for entire analysis
 #final output data dictionary
-    output = dict()
-    Ar_Station_Run_List = [] # Made with the hopes of being able to start mid-analysis if script stall
-    SW_station_list = []
-    SW_station_list_avail = []
-    Ar_Station_NoGo_List = []
-    Ar_Station_NoGo_Reason = []
-    SW_Station_NoGo_List = []
-    SW_Station_NoGo_Reason = []
-    
-    # Review Avaiable Air Temperature Records (must be csv in AirT folder)
-    for i in air_file_list:
-        time.sleep(0.2)
-        bn = os.path.basename(i)
-        bn = bn[:-4] #remove .csv
-        air_station_id = bn
-        Ar_Station_Run_List.append(air_station_id)
-    
-    #air_station_id = 'USW00014704'#,'WBAN54767'
-    #WBAN_id = "WBAN" + air_station_id[-5:] #USW to WBAN id value
-    
-    
-        for r in range(len(loc_df)):# goes through entire loop to make sure duplicates are processed
-    
-    ## For CSV location file use the following code:
-            if loc_df['NOAA_ID'][r] == air_station_id:
-                # --- Get Location ID of SW Station to run
-    
-                #####CHANGE TO MEET YOUR REQUIREMENTS
-                SW_station_id = str(loc_df['locname'][r])
-    
-                bsn = SW_station_id + '.csv' # add .00 when running Quash, need to fix export
-                fn = os.path.join(wksp_in, bsn)
-    
-                #Allows search in larger directort with sub, will only use first found file
-                for dirpath, dirnames, filenames in os.walk(wksp_in):
-                    for filename in [f for f in filenames if f.startswith(SW_station_id)]:
-    
-                        fn = os.path.join(dirpath, filename)
-                        #print fn
-                        break #should only print one fn per station- even though there are multiples within the file structure
-                # If there is a file with filename perform the analysis, kept this so "file not available" is still colected
-                if os.path.isfile(fn):
-                    #print "{} station id file is available".format(SW_station_id)
-                    SW_station_list_avail.append(SW_station_id)
-                    loc_df["fn"][r] = fn
-                else:
-                    SW_Station_NoGo_List.append(SW_station_id)
-                    SW_Station_NoGo_Reason.append("file is not available")
-                    continue #return to top
-    
-    ## For new effciient trial ran the first part seperately
-    #loc_df = loc_df.dropna(subset=['fn']) # relocnamemove all stations without a filename (fn is na)
-    loc_df = loc_df[loc_df.fn != ""] # drop all stations without available file (fn string is empty)
-    loc_df =loc_df.reset_index() # so the columns can be called sequencely
-    
-    print("Now starting evaluate/clean SW data")
+output = dict()
+Ar_Station_Run_List = [] # Made with the hopes of being able to start mid-analysis if script stall
+SW_station_list = []
+SW_station_list_avail = []
+Ar_Station_NoGo_List = []
+Ar_Station_NoGo_Reason = []
+SW_Station_NoGo_List = []
+SW_Station_NoGo_Reason = []
+
+# Review Avaiable Air Temperature Records (must be csv in AirT folder)
+for i in air_file_list:
+    time.sleep(0.2)
+    bn = os.path.basename(i)
+    bn = bn[:-4] #remove .csv
+    air_station_id = bn
+    Ar_Station_Run_List.append(air_station_id)
+
+#air_station_id = 'USW00014704'#,'WBAN54767'
+#WBAN_id = "WBAN" + air_station_id[-5:] #USW to WBAN id value
+
+
+    for r in range(len(loc_df)):# goes through entire loop to make sure duplicates are processed
+
+## For CSV location file use the following code:
+        if loc_df['NOAA_ID'][r] == air_station_id:
+            # --- Get Location ID of SW Station to run
+
+            #####CHANGE TO MEET YOUR REQUIREMENTS
+            SW_station_id = str(loc_df['locname'][r])
+
+            bsn = SW_station_id + '.csv' # add .00 when running Quash, need to fix export
+            fn = os.path.join(wksp_in, bsn)
+
+            #Allows search in larger directort with sub, will only use first found file
+            for dirpath, dirnames, filenames in os.walk(wksp_in):
+                for filename in [f for f in filenames if f.startswith(SW_station_id)]:
+
+                    fn = os.path.join(dirpath, filename)
+                    #print fn
+                    break #should only print one fn per station- even though there are multiples within the file structure
+            # If there is a file with filename perform the analysis, kept this so "file not available" is still colected
+            if os.path.isfile(fn):
+                #print "{} station id file is available".format(SW_station_id)
+                SW_station_list_avail.append(SW_station_id)
+                loc_df["fn"][r] = fn
+            else:
+                SW_Station_NoGo_List.append(SW_station_id)
+                SW_Station_NoGo_Reason.append("file is not available")
+                continue #return to top
+
+## For new effciient trial ran the first part seperately
+#loc_df = loc_df.dropna(subset=['fn']) # relocnamemove all stations without a filename (fn is na)
+loc_df = loc_df[loc_df.fn != ""] # drop all stations without available file (fn string is empty)
+loc_df =loc_df.reset_index() # so the columns can be called sequencely
+
+print("Now starting evaluate/clean SW data")
 
 for r in range(len(loc_df)): #for debugging range(10)
     air_station_id = loc_df['NOAA_ID'][r]
