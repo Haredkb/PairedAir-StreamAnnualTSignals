@@ -1,0 +1,40 @@
+# CONUS_GWContribution2Streams
+##System requirements
+
+#Run these libraries before scripts
+ 
+#Software Dependencies in R
+install.packages("rnoaa")
+install.packages("dplyr")
+install.packages("rgdal") 
+install.packages("sf")
+install.packages("tidyverse") 
+install.packages("dataRetrieva"l)
+
+#Software Dependencies in Python
+import numpy as np # for calcualtions and working in numpy arrays
+import datetime as dt # converting datetime conventions
+import pandas as pd # for dataframe manipulation, import and export
+import os
+import sys
+import os.path
+import glob
+import matplotlib.pyplot as plt # for plotting results
+import matplotlib.cm as cm
+import pickle # to output variable to file
+import time # to use sleep function
+from func_timeout import func_timeout, FunctionTimedOut
+from scipy import optimize
+import matplotlib.pyplot as plt
+import csv
+import pickle
+import DKH_SignalProcessModules_REMOVEFFT #DKH module within folder
+
+#These scripts have been tested on Windows system x86_64, R version 3.6.0, and Python 2.7.15
+
+##Demo
+Uses data from  input file "station_input_example.csv", temperature data included, but also can be pulled from scripts if surface water stations are part of the National Water Inventory System. 
+
+
+4. Instructions for use
+Run scripts subsquently STEP 1- STEP 3b
