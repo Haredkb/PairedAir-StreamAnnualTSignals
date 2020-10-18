@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Dec 21 14:48:02 2018
-
-@author: hared
+Continental-Scale Analysis of Shallow and Deep Groundwater Contributions to Streams analysis STEP3a
+@author: Danielle Hare
 """
 ## Run after the STEP2 - the "output" variable is required
 ##Note: This set will drop data <2010 due to do air temperature records only having >2010 records

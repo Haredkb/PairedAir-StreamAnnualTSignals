@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Dec 29 10:34:42 2018
-
+Continental-Scale Analysis of Shallow and Deep Groundwater Contributions to Streams analysis STEP3b
 @author: hared
 """
 import os.path
@@ -34,7 +34,7 @@ except:
     
 wksp_out = r'output\Step3b_Output'
 
-loc_fn = r'final_run_output\Station_ID_NOAA_Match_.txt'
+loc_fn = r'output\Station_ID_NOAA_Match_.txt'
 
 
 csv_bn = "*Sin Data.csv"
@@ -115,12 +115,6 @@ for i in air_station_list:
                 SW_station_id = str(loc_df.records[r]['locname'])
             except: # if csv loc input file
                 SW_station_id = str(loc_df['locname'][r])
-                
-            try: #only for maheu (assumes it is dbf)
-                SW_TCat = str(loc_df.records[r]['T_Cat']) 
-                SW_TCat = str(loc_df.records[r]['T_Cat'])
-            except: # if not maheu
-                pass
             
             # Only use the Ar temp file that matches SW
             if SW_AR_id != SW_station_id:

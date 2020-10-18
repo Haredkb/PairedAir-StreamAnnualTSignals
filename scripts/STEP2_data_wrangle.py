@@ -1,5 +1,6 @@
 ## Danielle Hare
-## NRE 5585 Final Project
+## Continental-Scale Analysis of Shallow and Deep Groundwater Contributions to Streams
+## October 14, 2020
 
 
 # Import Modules
@@ -14,7 +15,7 @@ import os
 import sys
 import os.path
 import glob
-import DKH_SignalProcessModules_REMOVEFFT #DKH module
+import SignalProcessModules #DKH module
 import matplotlib.pyplot as plt # for plotting results
 import matplotlib.cm as cm
 import pickle # to output variable to file
@@ -144,11 +145,11 @@ for r in range(len(loc_df)): #for debugging range(10)
             df0 = df0.rename(index=str, columns={"Date": "datetime"})
 
 
-        except FunctionTimedOut:
-            print "SW_{} Timed out".format(SW_station_id)
-            SW_Station_NoGo_List.append(SW_station_id)
-            SW_Station_NoGo_Reason.append("Timed Out")
-            continue
+#        except FunctionTimedOut:
+#            print "SW_{} Timed out".format(SW_station_id)
+#            SW_Station_NoGo_List.append(SW_station_id)
+#            SW_Station_NoGo_Reason.append("Timed Out")
+#            continue
 
         except:
             try:
@@ -240,7 +241,7 @@ for r in range(len(loc_df)): #for debugging range(10)
 
     # --- Perform FFT through created Module
         try:
-            output['SW_' + SW_station_id]= func_timeout(60, DKH_SignalProcessModules_REMOVEFFT.swT_fft, args = (temp_SW,stime,etime))
+            output['SW_' + SW_station_id]= func_timeout(60, SignalProcessModules.swT_AS, args = (temp_SW,stime,etime))
         except FunctionTimedOut:
             print "SW_{} Timed out".format(SW_station_id)
             SW_Station_NoGo_List.append(SW_station_id)
@@ -285,7 +286,7 @@ for r in range(len(loc_df)): #for debugging range(10)
                 # because there is multiple sw per air temperature stations, need a uniqur name for each
                 AR_output_nm = "AR_" + air_station_id + "." +SW_station_id
                 
-                output[AR_output_nm] = func_timeout(60, DKH_SignalProcessModules_REMOVEFFT.airT_fft, args = (wksp_in_air, air_station_id, stime, etime))
+                output[AR_output_nm] = func_timeout(60, SignalProcessModules.airT_AS, args = (wksp_in_air, air_station_id, stime, etime))
                 
                 temp_AR = output[AR_output_nm]['temp_raw']
                 #temp_AR_filt = output[AR_output_nm]['temp_filt_fft']
