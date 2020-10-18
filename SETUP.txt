@@ -39,5 +39,5 @@ import SignalProcessModules # module within script folder
 4. Instructions for use
 Run scripts subsquently STEP 1- STEP 3b. Input file for STEP1 should be in the form of "station_input_example.txt". Change input file if surface water location files are under a different name. 
 STEP2 input should be in the form of "input/Station_ID_NOAA_Match_EXAMPLEOUTPUT.txt", but is automatically created from STEP1. 
-STEP3a uses variable "OUTPUT" from STEP2, so needs to be run sequentially or pickle folder (.pkl) created from running STEP2 needs to be loaded. 
+STEP3a uses variable "OUTPUT" from STEP2, so needs to be run sequentially or pickle folder (.dmp) created from running STEP2 needs to be loaded. 
 STEP3b uses files from STEP3a_Output folder (sin_parameters), and is all relatively positioned in folders so no modifications should need to be made.  
