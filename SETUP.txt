@@ -28,13 +28,16 @@ from scipy import optimize
 import matplotlib.pyplot as plt
 import csv
 import pickle
-import DKH_SignalProcessModules_REMOVEFFT #DKH module within folder
+import SignalProcessModules # module within script folder
 
 #These scripts have been tested on Windows system x86_64, R version 3.6.0, and Python 2.7.15
 
 ##Demo
-Uses data from  input file "station_input_example.csv", temperature data included, but also can be pulled from scripts if surface water stations are part of the National Water Inventory System. 
-
+#Uses data from  input file "station_input_example.csv". This input is appropriate for any USGS stations, if other stations are to be used convert to this input style, and surface water temperatures will need to be be downloaded to the input/SWT folder before running STEP2 
+#Demo temperature data included, but also can be pulled from scripts as part of the demo or other surface water stations that are part of the National Water Inventory System. 
 
 4. Instructions for use
-Run scripts subsquently STEP 1- STEP 3b
+Run scripts subsquently STEP 1- STEP 3b. Input file for STEP1 should be in the form of "station_input_example.txt". Change input file if surface water location files are under a different name. 
+STEP2 input should be in the form of "input/Station_ID_NOAA_Match_EXAMPLEOUTPUT.txt", but is automatically created from STEP1. 
+STEP3a uses variable "OUTPUT" from STEP2, so needs to be run sequentially or pickle folder (.pkl) created from running STEP2 needs to be loaded. 
+STEP3b uses files from STEP3a_Output folder (sin_parameters), and is all relatively positioned in folders so no modifications should need to be made.  
