@@ -202,7 +202,7 @@ def swT_AS(temp, StartTime, EndTime):
                 current = 0
                 
         # If there is a data chuck missing that is greater than X days then dont use that year
-        if longest > 30:
+        if longest > 30: #30 days is default, use Johnson et al. (2021) for advice on data gaps
             continue
             #print "{} is missing greater than 30 day segment".format(year)# try next year in sequence
         else:        
@@ -223,11 +223,11 @@ def swT_AS(temp, StartTime, EndTime):
     year_set.sort(reverse=True)
     print year_set
     
-    # Find longest data set and use for FFT
+    # Find longest data set to use for analysis 
     consective_year = []
     for r in range(len(year_set)):
         try: 
-            if year_set[r+1] == (year_set[r] - 1): #if the next year in the list is the susquencial year, keep going
+            if year_set[r+1] == (year_set[r] - 1): #if the next year in the list is the sequencial year, keep going
                 try: 
                     if year_set[r+2] == (year_set [r] - 2):
                         try:
@@ -262,54 +262,6 @@ def swT_AS(temp, StartTime, EndTime):
     temp = cons_temp.sort_index()
     
     tavg = temp['TAVG']
-    
-# --- Fill in Data Gaps
-    ##2019-10-22 removed, i think the fill NA was only for FFT , require no NAs. 
-    ###temp = temp.fillna(method='ffill') # fill data gaps with previous value
-    #tavg = temp['TAVG']
-    
-    
-#    # compute the Fourier transform and the spectral density of the signal
-#    temp_fft = sp.fftpack.fft(tavg)
-#    temp_psd = np.abs(temp_fft) ** 2
-#    fftfreq = sp.fftpack.fftfreq(len(temp_psd), 1.0 / 365)
-#    # only real numbers (remove neg frequencies)
-#    i = fftfreq > 0
-#    
-#    temp_fft_bis = temp_fft.copy()
-#    temp_fft_bis[np.abs(fftfreq) > 1.1] = 0
-#    
-#    #Extract Mag (Amp) and Angle (Phase)
-#    magnitude = np.abs(temp_fft_bis)
-#    phase = np.angle(temp_fft_bis)
-#    #Convert back to time series
-#    temp_filt = np.real(sp.fftpack.ifft(temp_fft_bis))
-#    temp['filt']= temp_filt
-    
-    # Normalize to mean and plot
-    #temp_mean = np.mean(temp_filt)
-    #temp_filt_norm = temp_filt - temp_mean
-    #plt.plot(date, temp_filt_norm)
-    
-### -------  sin fit
-    
-#    from scipy import optimize
-#    import numpy as np
-#    
-#    #units_min = 525600 
-#    #units_hr = 8760
-#    units_day = 365
-#    time_units = units_day  # **CHOOSE CORRECT UNITS
-#    timex_air = 2*np.pi*temp['DATE']/time_units 
-#
-#    def test_func(x, A, B, C, D):
-#         return (A * np.sin(B*x) + C) + D
-#
-#    res_avg, cov_avg = optimize.curve_fit(test_func, 
-#                                               timex_air,
-#                                               temp) 
-#                                               
-#    temp_sin_fit = test_func(timex_air, *res_avg)
     
     d = dict()
     d['temp_raw']=temp
